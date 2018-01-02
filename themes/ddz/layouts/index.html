@@ -1,0 +1,27 @@
+{{ partial "header.html" . }}
+
+<main id="content" class="site-content posts">
+
+  <header class="site-header">
+    <h1>{{ .Site.Title }}</h1>
+    <p>{{ .Site.Params.tagline }}</p>
+  </header>
+
+  {{ range (where .Data.Pages "Type" "post").GroupByDate "2006" -}}
+  <section>
+    <h2>{{ .Key }}</h2>
+
+    <ol>
+      {{ range .Pages -}}
+      <li>
+        <time datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">{{ .Date.Format "Jan 02" }}</time>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{ end }}
+
+</main>
+
+{{ partial "footer.html" . }}

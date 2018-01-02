@@ -1,0 +1,10 @@
+baseURL = "https://dashdashzako.net/"
+languageCode = "en-us"
+title = "dashdashzako"
+theme = "ddz"
+
+[permalinks]
+  post = "/:year/:title/"
+
+[author]
+  name = "dashdashzako"
