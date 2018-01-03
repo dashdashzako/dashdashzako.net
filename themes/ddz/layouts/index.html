@@ -1,17 +1,19 @@
 {{ partial "header.html" . }}
 
-<main id="content" class="site-content posts">
+<main class="site-content">
 
   <header class="site-header">
+    {{ if isset .Site.Params "logo" -}}
+    <img class="logo" src="{{ index .Site.Params "logo" }}" alt="">
+    {{- end }}
     <h1>{{ .Site.Title }}</h1>
-    <p>{{ .Site.Params.tagline }}</p>
   </header>
 
   {{ range (where .Data.Pages "Type" "post").GroupByDate "2006" -}}
   <section>
     <h2>{{ .Key }}</h2>
 
-    <ol>
+    <ol class="posts-list">
       {{ range .Pages -}}
       <li>
         <time datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">{{ .Date.Format "Jan 02" }}</time>

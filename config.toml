@@ -3,8 +3,11 @@ languageCode = "en-us"
 title = "dashdashzako"
 theme = "ddz"
 
-pygmentsStyle = "monokai"
+pygmentsUseClasses = true
 pygmentsCodeFences = true
+
+[params]
+  logo = "/img/minnow-square.jpg"
 
 [permalinks]
   post = "/:year/:title/"

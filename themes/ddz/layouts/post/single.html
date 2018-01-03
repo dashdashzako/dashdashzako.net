@@ -1,10 +1,8 @@
 {{ partial "header.html" . }}
 
-<nav class="site-nav">
-  <a href="{{ .Site.BaseURL }}">Index</a>
-</nav>
+<a class="site-nav" href="{{ .Site.BaseURL }}"><span class="a11y-left" aria-hidden="true">↩</span>Index</a>
 
-<main id="content" class="site-content">
+<main class="site-content">
   <article class="post">
     <header class="post-header">
       <h1 class="post-title">{{ .Title }}</h1>
@@ -15,5 +13,17 @@
 
   </article>
 </main>
+
+{{ if .PrevInSection | or .NextInSection -}}
+<nav class="posts-pagination" aria-label="Posts pagination">
+  {{ if .NextInSection -}}
+  <a rel="prev" href="{{ .NextInSection.Permalink }}"><span class="a11y-left" aria-hidden="true">&laquo;</span>{{ .NextInSection.Title }}</a>
+  {{- end }}
+
+  {{ if .PrevInSection -}}
+  <a rel="next" href="{{ .PrevInSection.Permalink }}">{{ .PrevInSection.Title }}<span class="a11y-right" aria-hidden="true">&raquo;</span></a>
+  {{- end }}
+</nav>
+{{- end }}
 
 {{ partial "footer.html" . }}
