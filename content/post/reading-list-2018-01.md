@@ -7,9 +7,13 @@ draft: true
 
 ## Web Fonts: serif or sans serif?
 
-Until recently I didn't know much about the topic other than the aesthetics point of view. There are quite a few research papers about it, and one could spend an entire week switching from an opinion to the other. The topic is so debatable and debated that I couldn't find a definitive answer to my question.
+Until recently I didn't know much about the topic other than the aesthetics point of view. There are quite a few research papers about it, and one could spend an entire week switching from an opinion to the other. The topic is so debatable and debated that I couldn't find a definitive answer to my question, but the overall feeling I got is that there _might_ be some benefit in using sans serif over serif typeface in a web context, even though the magnitude may be difficult to perceive.
 
-My conclusion is that there _might_ be some benefit in using sans serif over serif typeface in a web context. However, I feel like research using more recent fonts could be useful, especially since these days no one really uses Times New Roman anymore.
+That being said, many experiments were done at a time when using anything other than Arial and Times New Roman was impossible, and when screens resolutions were much smaller than today. It's not like all these results are obsolete, but I feel like conducting research using more modern fonts and narrowing the devices to a specific kind could be useful. For example, with a modern desktop screen using a 20 pixels font size, which font peforms better than the other ones?
+
+People preferences are different wether they use an e-reader, a smartphone, or a television. And too many research papers mention "the Web" as a universal support, when it's only a pipe to transport information. Since a website can be viewed on a dozen of different devices and contexts, finding the universal typeface for "the Web" doesn't make sense anymore, and sounds like looking for a unicorn.
+
+It all depends on the user's profile and preferences, know your audience.
 
 * [How Serif and Sans Serif Typefaces Influence Reading on Screen: An Eye Tracking Study.](https://link.springer.com/chapter/10.1007/978-3-319-40355-7_55)
 

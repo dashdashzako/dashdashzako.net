@@ -1,6 +1,6 @@
 {{ partial "header.html" . }}
 
-<a class="site-nav" href="{{ .Site.BaseURL }}"><span class="a11y-left" aria-hidden="true">↩</span>Index</a>
+<a class="site-nav" href="{{ .Site.BaseURL }}"><span class="a11y-hidden-left" aria-hidden="true">↩</span>Index</a>
 
 <main class="site-content">
   <article class="post">
@@ -15,14 +15,25 @@
 </main>
 
 {{ if .PrevInSection | or .NextInSection -}}
-<nav class="posts-pagination" aria-label="Posts pagination">
-  {{ if .NextInSection -}}
-  <a rel="prev" href="{{ .NextInSection.Permalink }}"><span class="a11y-left" aria-hidden="true">&laquo;</span>{{ .NextInSection.Title }}</a>
-  {{- end }}
 
-  {{ if .PrevInSection -}}
-  <a rel="next" href="{{ .PrevInSection.Permalink }}">{{ .PrevInSection.Title }}<span class="a11y-right" aria-hidden="true">&raquo;</span></a>
-  {{- end }}
+<hr>
+
+<nav class="posts-pagination" aria-label="Posts pagination">
+  <ul>
+    {{ if .NextInSection -}}
+    <li>
+      Forward in time:<br>
+      <a rel="prev" href="{{ .NextInSection.Permalink }}">{{ .NextInSection.Title }}</a>
+    </li>
+    {{- end }}
+    {{ if .PrevInSection -}}
+    <li>
+      Back in time:<br>
+      <a rel="next" href="{{ .PrevInSection.Permalink }}">{{ .PrevInSection.Title }}</a>
+    </li>
+    {{- end }}
+  </ul>
+
 </nav>
 {{- end }}
 
