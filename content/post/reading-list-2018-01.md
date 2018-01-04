@@ -1,9 +1,28 @@
 ---
-title: "Reading List for 2018, week 01"
-description: "What I found interesting to read for 2018, week 01 "
+title: "Weekly log for 2018, week 01"
+description: "My weekly stuff I found interesting to do or read during 2018, week 01 "
 date: 2018-01-02T16:42:39+01:00
 draft: true
 ---
+
+This week I've read plenty of stuff about digital accessibility, both from the web developer and application user perspective.
+
+I've recently joined the [Accessible Online Learning Community Group](https://www.w3.org/community/accesslearn/) through my work at [Inria](https://www.inria.fr). This community group focuses on reviewing current <abbr title="World Wide Web Consortium">W3C</abbr> resources and technologies to ensure the requirements for accessible online learning experiences are considered. In other words, the group indentifies what in W3C documents should be patched to meet online learning expectations.
+
+For instance, let's say a teacher needs to use complex images like diagrams or cartoons (some fun won't hurt) in their class. Then they want to publish the class content online so it can be used in a <abbr title="Massive open online course">MOOC</abbr>. Browsing the [web accessibility tutorials](https://www.w3.org/WAI/tutorials/), they find out there are more than one way to do it, but the [Complex Images section](https://www.w3.org/WAI/tutorials/images/complex/) seems to suit the needs. Unfortunately, the given example won't mention anything about _the good way_ to describe flowcharts or cartoons.
+
+This is where <abbr title="Accessible Online Learning Community Group">accesslearn</abbr> comes into play. Its purpose is to find these kind of missing or inadequate information in W3C documentation and propose modifications to the documents. [See the W3C Resources and Gaps Related to Online Learning document](https://docs.google.com/spreadsheets/d/1LHynDV-umVHF3NcKkCIuSL12lzZCj-2qS4gjmLtsXto/edit#gid=1155254872) to figure what the group has identified so far.
+
+Anyway, as I was browsing the accesslearn group archives, I discovered the W3C <abbr title="Education and Outreach Working Group">EOWG</abbr> bound to the <abbr title="Web Accessibility Initiative">WAI</abbr>. A member of this group is [Stéphane Deschamps](https://nota-bene.org/)...
+
+https://cpu.dascritch.net/post/2016/12/14/St%C3%A9phane-Deschamps%2C-Coordinateur-accessibilit%C3%A9-et-open-source-chez-Orange
+
+A discovery leading to another, I dug an interesting video showing how a visually impaired man uses his smartphone for daily tasks such as using transportation, reading an e-book, or analyzing text from a physical object.  
+The video was shot in 2012 during the Paris Web conference and is called [« Une journée accélérée en pure mobilité : une idée fixe ? » par Tanguy Lohéac](http://www.dailymotion.com/video/xw8ygi).
+
+<iframe src="//www.dailymotion.com/embed/video/xw8ygi" allowfullscreen="" height="270" frameborder="0" width="480"></iframe>
+
+The interface is a bit obsolete, but
 
 ## Web Fonts: serif or sans serif?
 
@@ -35,3 +54,7 @@ It all depends on the user's profile and preferences, know your audience.
 * [So, What Size and Type of Font Should I Use on My Website?](http://usabilitynews.org/so-what-size-and-type-of-font-should-i-use-on-my-website/)
 * [A Comparison of Popular Online Fonts: Which Size and Type is Best?](http://usabilitynews.org/a-comparison-of-popular-online-fonts-which-size-and-type-is-best/)
 * [Which Fonts Do Children Prefer to Read Online?](http://usabilitynews.org/which-fonts-do-children-prefer-to-read-online/)
+
+https://github.com/paypal/accessible-html5-video-player
+
+https://cpu.dascritch.net/post/2016/12/14/St%C3%A9phane-Deschamps%2C-Coordinateur-accessibilit%C3%A9-et-open-source-chez-Orange
