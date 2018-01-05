@@ -11,7 +11,7 @@
   --palette-gray: #484848;
   --palette-black: #111111;
   --font-base-size: 100%;
-  --font-growth: .5vw;
+  --font-growth: 1vw;
   --palette-yellow: #ffff00;
 }
 
@@ -26,8 +26,23 @@ html {
   background-color: var(--palette-white);
   color: var(--palette-black);
   font-family: "Libre Franklin", "system", sans-serif;
-  font-size: calc(100% + var(--font-growth));
+  font-size: 100%;
 }
+
+@media screen and (min-width: 700px) {
+  html {
+    font-size: calc((100% * (9 / 16)) + 1vw);
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  html {
+    font-size: calc(100% * (29 / 16));
+  }
+}
+
+
+
 
 body { line-height: 1.5; }
 
@@ -41,20 +56,13 @@ body {
 
 hr {
   display: block;
-  width: 100%;
+  width: 33%;
+  min-width: 10rem;
   height: 1px;
-  margin: 2rem 0;
+  margin: 2rem auto;
 
   border: 0;
-  background: linear-gradient(90deg,
-    transparent 0,
-    transparent 33%,
-    var(--palette-black) 33%,
-    var(--palette-black) 66%,
-    transparent 66%,
-    transparent 100%) repeat-x;
-  background-size: 100%;
-  background-position: center 0;
+  background: var(--palette-black);
 }
 
 img { max-width: 100%; }
@@ -76,9 +84,16 @@ a[href]:focus {
 
 ol,
 ul {
-  margin: 0 0 1rem 1.25rem;
+  margin: 0 0 1rem .25rem;
   padding: 0;
   list-style-position: outside;
+}
+
+@media screen and (min-width: 700px) {
+  ol,
+  ul {
+    margin-left: 1.25rem;
+  }
 }
 
 ol ol,
@@ -100,7 +115,7 @@ h4 { font-size: 1.4rem; }
 h5, h6 { font-size: 1.2rem; }
 
 h2, h3, h4, h5, h6 {
-  margin: 0 0 .5em;
+  margin: 1em 0 .5em 0;
   line-height: 1.2;
 }
 
@@ -108,10 +123,12 @@ p { margin: 0 0 1rem; }
 
 blockquote {
   padding: 1rem;
+  margin: 0 0 1rem .25rem;
   border-left: 5px solid var(--palette-light-gray);
   color: var(--palette-gray);
   font-style: italic;
 }
+
   blockquote p { margin: 0; }
   blockquote cite {
     display: block;
@@ -120,6 +137,13 @@ blockquote {
     font-size: .875rem;
     font-weight: bold;
   }
+
+@media screen and (min-width: 700px) {
+  blockquote {
+    margin-left: 1.25rem;
+  }
+}
+
 
 kbd, code, pre { font-family: "Source Code Pro", monospace; }
 
@@ -138,11 +162,7 @@ a:focus code { background-color: transparent; }
 .container {
   max-width: 38rem;
   margin: 0 auto;
-  padding: .5rem;
-}
-
-@media screen and (min-width: 700px) {
-  .container { padding: 1rem; }
+  padding: 1rem;
 }
 
 .logo {
@@ -207,6 +227,19 @@ a:focus code { background-color: transparent; }
   .posts-pagination ul { flex-direction: row; }
 
   .posts-pagination [rel="next"] { margin-left: auto; }
+}
+
+
+/* Post */
+
+.post {
+  counter-reset: headers;
+}
+
+.post h2::before {
+  counter-increment: headers;
+  content: counter(headers, upper-roman) '.';
+  margin-right: .5rem;
 }
 
 
