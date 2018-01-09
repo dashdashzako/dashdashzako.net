@@ -64,6 +64,11 @@ hr {
 
 img { max-width: 100%; }
 
+em {
+  font-style: normal;
+  font-weight: bold;
+}
+
 a[href] {
   color: inherit;
   text-decoration: none;
