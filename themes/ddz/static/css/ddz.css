@@ -41,9 +41,6 @@ html {
   }
 }
 
-
-
-
 body { line-height: 1.5; }
 
 html,
@@ -69,14 +66,15 @@ img { max-width: 100%; }
 
 a[href] {
   color: inherit;
-  text-decoration: underline;
-  text-decoration-skip: ink;
+  text-decoration: none;
+  background: linear-gradient(var(--palette-black), var(--palette-black)) no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 100%;
 }
 
 a[href]:hover,
 a[href]:focus {
   color: var(--palette-white);
-
   text-decoration: none;
   outline: 0;
   background: var(--palette-black);
@@ -150,14 +148,14 @@ kbd, code, pre { font-family: "Source Code Pro", monospace; }
 p kbd,
 p code {
   margin: 0;
-  padding: .0rem .25rem 0;
+  padding: 0 .25rem 0;
   background-color: var(--palette-light-gray);
 }
 
-a:hover kbd,
-a:hover code,
-a:focus kbd,
-a:focus code { background-color: transparent; }
+a[href]:hover kbd,
+a[href]:hover code,
+a[href]:focus kbd,
+a[href]:focus code { background-color: transparent; }
 
 .container {
   max-width: 38rem;
@@ -177,6 +175,7 @@ a:focus code { background-color: transparent; }
   font-size: calc(14px + .4vw);
   padding: .1em .3em;
 }
+  .site-nav .icon { font-size: 80%; }
   .site-nav + .site-content { margin-top: 2rem; }
 
 .site-header,
