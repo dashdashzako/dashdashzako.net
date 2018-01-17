@@ -71,10 +71,8 @@ em {
 
 a[href] {
   color: inherit;
-  text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) no-repeat;
-  background-size: 100% 2px;
-  background-position: 0 100%;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto
   outline: 0;
 }
 
@@ -83,11 +81,26 @@ a[href]:focus,
 a[href]:visited:hover,
 a[href]:visited:focus {
   color: var(--palette-white);
-  background: var(--palette-black);
 }
 
 a[href]:visited {
   color: var(--palette-gray);
+}
+
+@supports not (text-decoration-skip-ink: auto) {
+  a[href] {
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+  }
+
+  a[href]:hover,
+  a[href]:focus,
+  a[href]:visited:hover,
+  a[href]:visited:focus {
+    background: var(--palette-black);
+  }
 }
 
 ol,
