@@ -16,10 +16,16 @@
 
 *,
 *::before,
-*::after { box-sizing: border-box; }
+*::after {
+  box-sizing: border-box;
+}
 
-::-moz-selection { background: var(--palette-yellow); }
-::selection { background: var(--palette-yellow); }
+::-moz-selection {
+  background: var(--palette-yellow);
+}
+::selection {
+  background: var(--palette-yellow);
+}
 
 html {
   background-color: var(--palette-white);
@@ -28,19 +34,9 @@ html {
   font-size: 100%;
 }
 
-@media screen and (min-width: 700px) {
-  html {
-    font-size: calc((100% * (9 / 16)) + 1vw);
-  }
+body {
+  line-height: 1.5;
 }
-
-@media screen and (min-width: 2000px) {
-  html {
-    font-size: calc(100% * (29 / 16));
-  }
-}
-
-body { line-height: 1.5; }
 
 html,
 body {
@@ -61,7 +57,9 @@ hr {
   background: var(--palette-black);
 }
 
-img { max-width: 100%; }
+img {
+  max-width: 100%;
+}
 
 em {
   font-style: normal;
@@ -72,7 +70,6 @@ a[href] {
   color: inherit;
   text-decoration: underline;
   text-decoration-skip-ink: auto
-  outline: 0;
 }
 
 a[href]:hover,
@@ -80,26 +77,13 @@ a[href]:focus,
 a[href]:visited:hover,
 a[href]:visited:focus {
   color: var(--palette-white);
+  background: var(--palette-black);
+  text-decoration: none;
+  outline: 0;
 }
 
 a[href]:visited {
   color: var(--palette-gray);
-}
-
-@supports not (text-decoration-skip-ink: auto) {
-  a[href] {
-    text-decoration: none;
-    background: linear-gradient(currentColor, currentColor) no-repeat;
-    background-size: 100% 2px;
-    background-position: 0 100%;
-  }
-
-  a[href]:hover,
-  a[href]:focus,
-  a[href]:visited:hover,
-  a[href]:visited:focus {
-    background: var(--palette-black);
-  }
 }
 
 ol,
@@ -109,37 +93,64 @@ ul {
   list-style-position: outside;
 }
 
-@media screen and (min-width: 700px) {
-  ol,
-  ul {
-    margin-left: 1.25rem;
-  }
-}
-
 ol ol,
 ul ul,
 ul ol,
-ol ul { margin-bottom: 0; }
+ol ul {
+  margin-bottom: 0;
+}
 
-li { margin: 0; }
+li {
+  margin: 0;
+}
 
 article,
-section { margin-bottom: 1rem; }
+section {
+  margin-bottom: 1rem;
+}
 
-h1, h2, h3, h4, h5, h6 { font-family: "Arvo", "system"; }
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Arvo", "system";
+}
 
-h1 { font-size: 2rem; margin: 0; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.4rem; }
-h5, h6 { font-size: 1.2rem; }
+h1 {
+  font-size: 2rem; margin: 0;
+}
 
-h2, h3, h4, h5, h6 {
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+h5, h6 {
+  font-size: 1.2rem;
+}
+
+
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 1em 0 .5em 0;
   line-height: 1.2;
 }
 
-p { margin: 0 0 1rem; }
+ol,
+ul {
+  margin-left: 1.25rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
 
 blockquote {
   padding: 1rem;
@@ -149,7 +160,10 @@ blockquote {
   font-style: italic;
 }
 
-  blockquote p { margin: 0; }
+  blockquote p {
+    margin: 0;
+  }
+
   blockquote cite {
     display: block;
     margin: 1rem 0 0;
@@ -158,14 +172,11 @@ blockquote {
     font-weight: bold;
   }
 
-@media screen and (min-width: 700px) {
-  blockquote {
-    margin-left: 1.25rem;
-  }
+kbd,
+code,
+pre {
+  font-family: "Source Code Pro", monospace;
 }
-
-
-kbd, code, pre { font-family: "Source Code Pro", monospace; }
 
 p kbd,
 p code {
@@ -177,7 +188,9 @@ p code {
 a[href]:hover kbd,
 a[href]:hover code,
 a[href]:focus kbd,
-a[href]:focus code { background-color: transparent; }
+a[href]:focus code {
+  background-color: transparent;
+}
 
 .container {
   max-width: 38rem;
@@ -193,12 +206,28 @@ a[href]:focus code { background-color: transparent; }
   border-radius: 50%;
 }
 
+/*
+  Site navigation
+ */
+
 .site-nav {
-  font-size: calc(14px + .4vw);
+  font-size: 87.5%;
   padding: .1em .3em;
 }
-  .site-nav .icon { font-size: 80%; }
-  .site-nav + .site-content { margin-top: 2rem; }
+
+  .site-nav .icon {
+    font-size: 80%;
+  }
+
+  .site-nav a {
+    display: inline-block;
+    padding: .2em .5em;
+    text-decoration: none;
+  }
+
+  .site-nav + .site-content {
+    margin-top: 2rem;
+  }
 
 .site-header,
 .post-header {
@@ -207,7 +236,9 @@ a[href]:focus code { background-color: transparent; }
   font-family: "Arvo", "system";
 }
 
-.posts-list { margin-left: 0; }
+.posts-list {
+  margin-left: 0;
+}
 
   .posts-list li {
     margin-bottom: .5rem;
@@ -219,14 +250,9 @@ a[href]:focus code { background-color: transparent; }
     font-weight: bold;
   }
 
-  .posts-list li a { display: block; }
-
-@media screen and (min-width: 700px) {
-  .posts-list li { display: flex; }
-
-  .posts-list li time { flex: 0 0 5rem; }
-}
-
+  .posts-list li a {
+    display: block;
+  }
 
 /* posts pagination */
 
@@ -235,21 +261,16 @@ a[href]:focus code { background-color: transparent; }
   font-size: 0.875rem;
 }
 
-.posts-pagination ul {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 0;
-}
+  .posts-pagination ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+  }
 
-.posts-pagination li { list-style: none; }
-
-@media screen and (min-width: 700px) {
-  .posts-pagination ul { flex-direction: row; }
-
-  .posts-pagination [rel="next"] { margin-left: auto; }
-}
-
+  .posts-pagination li {
+    list-style: none;
+  }
 
 /* Post */
 
@@ -261,6 +282,57 @@ a[href]:focus code { background-color: transparent; }
   counter-increment: headers;
   content: counter(headers, upper-roman) '.';
   margin-right: .5rem;
+}
+
+/*
+  Text resizing should depend on viewport size.
+ */
+
+@media screen and (min-width: 700px) {
+  html {
+    font-size: calc((100% * (9 / 16)) + 1vw);
+  }
+
+  blockquote {
+    margin-left: 1.25rem;
+  }
+
+  .posts-list li {
+    display: flex;
+  }
+
+  .posts-list li time {
+    flex: 0 0 5rem;
+  }
+
+  .posts-pagination ul {
+    flex-direction: row;
+  }
+
+  .posts-pagination [rel="next"] {
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  html {
+    font-size: calc(100% * (29 / 16));
+  }
+}
+
+/*
+  Text underline can bother some users when it crosses edges, but CSS property
+  support is below average atm.
+ */
+@supports not (text-decoration-skip-ink: auto) {
+  a[href] {
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) no-repeat;
+    background-size: 100% 2px;
+    background-position: 0 100%;
+  }
+
+  .site-nav a { background: none; }
 }
 
 
