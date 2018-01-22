@@ -332,7 +332,9 @@ a[href]:focus code {
     background-position: 0 100%;
   }
 
-  .site-nav a { background: none; }
+  .site-nav a {
+    background: none;
+  }
 }
 
 
