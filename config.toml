@@ -1,8 +1,10 @@
 baseURL = "https://dashdashzako.net/"
 languageCode = "en-us"
 title = "dashdashzako"
+description = ""
 theme = "ddz"
 
+enableGitInfo = true
 pygmentsUseClasses = true
 pygmentsCodeFences = true
 
