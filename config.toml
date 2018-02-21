@@ -1,7 +1,7 @@
 baseURL = "https://dashdashzako.net/"
 languageCode = "en-us"
 title = "dashdashzako"
-description = ""
+description = "Small fish in a big pond"
 theme = "ddz"
 
 pygmentsUseClasses = true
