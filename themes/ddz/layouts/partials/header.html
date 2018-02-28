@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
-
 <head>
   {{ .Hugo.Generator }}
 
@@ -16,8 +15,8 @@
   <meta property="og:type" content="website">
   <meta name="description" content="{{ .Site.Params.description }}">
   {{- else -}}
-  <title>{{ .Title }} - {{ .Site.Title }}</title>
-  <meta property="og:title" content="{{ .Title }} - {{ .Site.Title }}">
+  <title>{{ .Title }} – {{ .Site.Title }}</title>
+  <meta property="og:title" content="{{ .Title }} – {{ .Site.Title }}">
   <meta property="og:type" content="article">
   <meta name="description" content="{{ .Description }}">
   {{- end }}
@@ -25,7 +24,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
   <link rel="stylesheet" href="{{ "css/ddz.css" | relURL }}">
   <link href="{{ "index.xml" | relURL }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} - RSS feed">
-
 </head>
 
 <body>
