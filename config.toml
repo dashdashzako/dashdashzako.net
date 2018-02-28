@@ -1,5 +1,5 @@
 baseURL = "https://dashdashzako.net/"
-languageCode = "en-us"
+languageCode = "en"
 title = "dashdashzako"
 description = "Small fish in a big pond"
 theme = "ddz"
