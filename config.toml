@@ -1,7 +1,6 @@
 baseURL = "https://dashdashzako.net/"
 languageCode = "en"
 title = "dashdashzako"
-description = "Small fish in a big pond"
 theme = "ddz"
 
 pygmentsUseClasses = true
@@ -9,6 +8,7 @@ pygmentsCodeFences = true
 
 [params]
   logo = "/img/minnow-square.jpg"
+  description = "Small fish in a big pond"
 
 [permalinks]
   post = "/:year/:title/"
