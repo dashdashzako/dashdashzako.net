@@ -23,6 +23,7 @@
 ::-moz-selection {
   background: var(--palette-yellow);
 }
+
 ::selection {
   background: var(--palette-yellow);
 }
@@ -66,23 +67,23 @@ em {
   font-weight: bold;
 }
 
-a[href] {
+a {
   color: inherit;
   text-decoration: underline;
   text-decoration-skip-ink: auto
 }
 
-a[href]:hover,
-a[href]:focus,
-a[href]:visited:hover,
-a[href]:visited:focus {
+a:hover,
+a:focus,
+a:visited:hover,
+a:visited:focus {
   color: var(--palette-white);
   background: var(--palette-black);
   text-decoration: none;
   outline: 0;
 }
 
-a[href]:visited {
+a:visited {
   color: var(--palette-gray);
 }
 
@@ -133,18 +134,12 @@ h5, h6 {
   font-size: 1.2rem;
 }
 
-
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2, h3, h4, h5, h6 {
   margin: 1em 0 .5em 0;
   line-height: 1.2;
 }
 
-ol,
-ul {
+ol, ul {
   margin-left: 1.25rem;
 }
 
@@ -185,10 +180,10 @@ p code {
   background-color: var(--palette-light-gray);
 }
 
-a[href]:hover kbd,
-a[href]:hover code,
-a[href]:focus kbd,
-a[href]:focus code {
+a:hover kbd,
+a:hover code,
+a:focus kbd,
+a:focus code {
   background-color: transparent;
 }
 
@@ -325,7 +320,7 @@ a[href]:focus code {
   support is below average atm.
  */
 @supports not (text-decoration-skip-ink: auto) {
-  a[href] {
+  a {
     text-decoration: none;
     background: linear-gradient(currentColor, currentColor) no-repeat;
     background-size: 100% 2px;
