@@ -11,7 +11,7 @@ pygmentsCodeFences = true
   description = "Small fish in a big pond"
 
 [permalinks]
-  post = "/:year/:title/"
+  post = "/:year/:slug/"
 
 [author]
   name = "dashdashzako"
