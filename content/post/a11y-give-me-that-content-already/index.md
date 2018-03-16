@@ -15,13 +15,13 @@ However, screen readers users rely on the shortcuts made available to them. If n
 
 If your website has a reasonable amount of content before the main content (no menu at all, or a very small one), well, I think this may not really necessary. But if you run a marketplace, I bet your menu is a non neglectable part of the generated HTML page (and code).
 
-%%% CDISCOUNT EXAMPLE
-%%% AMAZON
-%%% RAKUTEN
+@TODO: CDISCOUNT EXAMPLE
+@TODO: AMAZON
+@TODO: RAKUTEN
 
-%%% EBAY does it the good way
+@TODO: EBAY does it the good way
 
-%%% RATIO MENU/CODE
+@TODO: RATIO MENU/CODE
 
 ```html
 <a href="#content" class="a11y-skip">Skip to content</a>
