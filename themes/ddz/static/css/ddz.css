@@ -322,13 +322,14 @@ a:focus code {
 @supports not (text-decoration-skip-ink: auto) {
   a {
     text-decoration: none;
-    background: linear-gradient(currentColor, currentColor) no-repeat;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
     background-size: 100% 2px;
     background-position: 0 100%;
   }
 
   .site-nav a {
-    background: none;
+    background-image: none;
   }
 }
 
