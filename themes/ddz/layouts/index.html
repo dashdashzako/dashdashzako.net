@@ -4,7 +4,7 @@
 
   <header class="site-header">
     {{ if isset .Site.Params "logo" -}}
-    <img class="logo" src="{{ index .Site.Params "logo" }}" alt="">
+    <img class="logo" src="{{ index .Site.Params "logo" }}" alt="" aria-hidden="true">
     {{- end }}
     <h1>{{ .Site.Title }}</h1>
   </header>
