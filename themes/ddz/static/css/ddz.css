@@ -281,6 +281,7 @@ a:focus code {
   counter-increment: headers;
   content: counter(headers, upper-roman) '.';
   margin-right: .5rem;
+  speak-as: numbers;
 }
 
 /*
