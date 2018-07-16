@@ -9,7 +9,10 @@ script:
 - hugo
 
 deploy:
-  skip_cleanup: true
-  provider: firebase
-  token:
-    secure: NWqfKThJHibbAIMKSnQGZdU8gcjiPM3gf9WmmXL/1zKkVocCSq2t48rMyOZKOtOd+BCtTRez09mhz7GeQ0wyx2EwSi8GJ+1UebBuFv5SNDUdErblwwXD5g0Xgl5IEODs2N5f1huEMMQWcxDyinrCIfkmGNaKZYvW48HtNUhBj4G54U1Na41J1l3p0xar2htFQCkclh44oovsKedkv89MrC6mqkBhSoXpqLodSFi21e0DxVoqDYRVsvMwpfb9mWgTAEinfROQDezWK1ath7WXqOUJ4SikAar0Sr0Vdvqu/WqT76/sNXgg0OCfcUVrkEzkycByeUIZJDOxD4u4c7tn1SM3+0v7431RdJbtS8YIuD1iE8ZE/q+Sb6tgLoojfqUVtQVScAokFJa0efynrQaOtQlxCKaJnF7aZ0lLXKmNYoQafdVvitfqJQ9nrL6qQ4ShrMwTXlNuI9IOJVTLnqwN8s4aBHPl9AoQTcYTLxPSnG7aPgKl4wYNmHc27H507AmYoxMEudYtc1bg7HSVy6x+QJJGswmb/2uM4/mgTb/uGMlOnq/1MSMQwneHdpJ4g8yowxkypHxtB0eYtLVZG1nhxb7qaO7kEYYKlgCjeLxuY8XI8k6X/hLzR++Jcbz453qec5sL4d5tl/r1DXralUsH3w1tKaA4ArdJfZpmHJHVuiM=
+  provider: pages
+  skip-cleanup: true
+  local-dir: public
+  github-token: $GITHUB_TOKEN
+  fqdn: www.dashdashzako.net
+  on:
+    branch: master
