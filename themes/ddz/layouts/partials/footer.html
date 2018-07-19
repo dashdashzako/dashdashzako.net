@@ -1,6 +1,9 @@
-{{ "<!-- Build date: " | safeHTML }}{{ (now.Format "Mon, 02 Jan 2006 15:04:05 MST") | safeHTML }}{{ " -->" | safeHTML }}
 
 </div>
+
+{{ "<!-- Build date: " | safeHTML }}{{ (now.Format "Mon, 02 Jan 2006 15:04:05 MST") | safeHTML }}{{ " -->" | safeHTML }}
+
+{{ template "_internal/google_analytics_async.html" . }}
 </body>
 
 </html>

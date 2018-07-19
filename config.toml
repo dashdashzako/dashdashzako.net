@@ -3,6 +3,7 @@ languageCode = "en"
 title = "dashdashzako"
 theme = "ddz"
 disableKinds = ["section", "taxonomy", "taxonomyTerm"]
+googleAnalytics = "UA-122579506-1"
 
 pygmentsUseClasses = true
 pygmentsCodeFences = true
