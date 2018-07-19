@@ -13,6 +13,6 @@ deploy:
   skip-cleanup: true
   local-dir: public
   github-token: $GITHUB_TOKEN
-  fqdn: www.dashdashzako.net
+  fqdn: dashdashzako.net
   on:
     branch: master
