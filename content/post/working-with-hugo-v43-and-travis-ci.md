@@ -123,12 +123,14 @@ GLIBCXX_3.4.25
 GLIBCXX_DEBUG_MESSAGE_LENGTH
 ```
 
-But I was not quite done yet, and the build returned a horrid
-`relocation error: hugo: symbol _ZTVNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, version GLIBCXX_3.4.21 not defined in file libstdc++.so.6 with link time reference`
-error.
+But I was not quite done yet, and the build returned a horrid error:
 
-At this point I was kind of lost and went to seek support on the Hugo discussion
-forum
+```sh
+relocation error: hugo: symbol _ZTVNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, version GLIBCXX_3.4.21 not defined in file libstdc++.so.6 with link time reference
+```
+
+At this point I was kind of lost and posted a message to seek support on the
+Hugo discussion forum
 ([see the thread](https://discourse.gohugo.io/t/hugo-v44-extended-and-relocation-errors/13029)).
 
 Eventually, someone proposed a good workaround to apply in travis configuration:
