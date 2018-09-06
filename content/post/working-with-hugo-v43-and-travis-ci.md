@@ -1,8 +1,10 @@
 ---
 title: "Working with Hugo v43 and TravisCI"
-description: "Hugo v43 has a new assets pipeline that requires some updates to the travis configuration. I'll walk through the steps to make it work properly."
-date: 2018-07-19T12:00:00+02:00
-draft: true
+description:
+  Hugo v43+ has a new assets pipeline that requires some updates to the travis
+  configuration. I'll describe how I managed to have a proper setup.
+date: 2018-09-06T12:00:00+02:00
+draft: false
 ---
 
 Since Hugo v43, you can use a brand new assets pipeline called
@@ -13,7 +15,7 @@ or [Grunt](https://gruntjs.com/).
 However, updating Hugo and your code to use Pipes will not work out of the box.
 
 This post is a follow up of my ["Publishing a website built with Hugo to GitHub
-Pages"]({{< relref "post/publishing-a-static-website.md" >}}) post.
+Pages"]({{< relref "/post/publishing-a-static-website.md" >}}) post.
 
 ## Pipes require the extended version of Hugo
 
@@ -121,10 +123,25 @@ GLIBCXX_3.4.25
 GLIBCXX_DEBUG_MESSAGE_LENGTH
 ```
 
-But I was not quite done yet, and the build returned a
+But I was not quite done yet, and the build returned a horrid
 `relocation error: hugo: symbol _ZTVNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, version GLIBCXX_3.4.21 not defined in file libstdc++.so.6 with link time reference`
 error.
 
 At this point I was kind of lost and went to seek support on the Hugo discussion
 forum
 ([see the thread](https://discourse.gohugo.io/t/hugo-v44-extended-and-relocation-errors/13029)).
+
+Eventually, someone proposed a good workaround to apply in travis configuration:
+
+```yml
+before_install:
+  # This workaround is required to avoid libstdc++ errors while
+  # running "extended" hugo with SASS support.
+  - wget -q -O libstdc++6
+    http://security.ubuntu.com/ubuntu/pool/main/g/gcc-5/libstdc++6_5.4.0-6ubuntu1~16.04.10_amd64.deb
+  - sudo dpkg --force-all -i libstdc++6
+install:
+  - wget -q -O hugo.deb
+    https://github.com/gohugoio/hugo/releases/download/v0.47.1/hugo_extended_0.47.1_Linux-64bit.deb
+  - sudo dpkg -i hugo.deb
+```
