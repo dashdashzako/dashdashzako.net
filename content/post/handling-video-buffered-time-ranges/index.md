@@ -17,29 +17,29 @@ tone:
 ![Vimeo controls bar](vimeo-controls-bar.png)
 
 Actually, I honestly don't know what this information is good for, but not
-having it feels like kind of weird. Of course I can use player without this
-feature, but I believe I got used to having it on popular players and expect to
-have it on every other player.
+having it feels like kind of weird. Of course I can still use a player without
+this feature, but I believe I got used to having it on popular players and
+expect to have it on every other player.
 
 One of my colleague said that this was useful to him because he knew up to which
 point in the video he could seek without having to wait for data to download.
 
-Right or wrong, I had to try to implement it.
+Right or wrong, I wanted to try to implement it.
 
-Basically, I bound an event listener on the HTMLMediaElement (the superclass of
-HTMLVideoElement and HTMLAudioElement) `progress` event, read the `buffered`
-property of the media, and transform it into a readable array of objects with a
-`start` and an `end` property.
+Basically, binding an event listener on the HTMLMediaElement (the superclass of
+HTMLVideoElement and HTMLAudioElement) `progress` event, reading the `buffered`
+property of the media, and then transforming it into a readable array of objects
+with a `start` and an `end` property is how I did.
 
 Sounds simple, right?
 
-Well, that this is the result I ended up with on Chrome:
+Well, kind of, but this is the result I ended up with on Chrome:
 
 ![Exemple of missing buffered ranges on Chrome](chrome-buffered-ranges.png)
 
-I thought that these small holes in the buffer were a consequence of a poor
-rendering technique of mine, so I looked for the plain text representation of
-the `buffered` property and after seeking in the media.
+I thought that these small holes in the buffer were a consequence of a poorly
+coded way to render the information, so I looked for the plain text
+representation of the `buffered` property and after seeking in the media.
 
 ```js
 const media = document.querySelector("video");
@@ -70,9 +70,10 @@ Why are there interruptions between the small initial ranges (i.e.
 `start: 103.483107, end: 106.277733`) and the following ones (i.e.
 `start: 107.302, end: 124.305`)?
 
-After trying on both Firefox and Safari, I got different results. None of the
+I then tried on both Firefox and Safari, I got different results. None of the
 browsers results were similar to the others, so I thought may be assuming
-browsers were doing it right was a bad assumption in the first place.
+browsers were doing it right **and** consistently was a bad assumption in the
+first place.
 
 What looked like a satisfying answer for this behaviour came from the
 [W3C embedded content about HTMLMediaElement](https://www.w3.org/TR/html50/embedded-content-0.html#best-practices-for-implementors-of-media-elements):
