@@ -1,5 +1,5 @@
 ---
-title: "Browsers Handling of Video Buffered Time Ranges"
+title: "Handling Video Buffered Time Ranges"
 description:
   "Giving users an indication about what part of a media might be useful. But
   can developers achieve this consistently, or do browsers get in the way?"
