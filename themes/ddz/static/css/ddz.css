@@ -177,7 +177,7 @@ blockquote {
   margin: 0 0 1rem 0.25rem;
   border-left: 5px solid var(--palette-light-gray);
   color: var(--palette-gray);
-  font-style: italic;
+  font-style: normal;
 }
 
 blockquote p {
