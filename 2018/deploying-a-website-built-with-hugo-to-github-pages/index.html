@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/deploying-a-website-built-with-hugo-to-github-pages/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Deploying a website built with Hugo to GitHub Pages – dashdashzako</title>
+  <meta property="og:title" content="Deploying a website built with Hugo to GitHub Pages – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="My workflow to deploy a gohugo static website using TravisCI and GitHub Pages hosting.">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Deploying a website built with Hugo to GitHub Pages</h1>
+      <time class="post-date" datetime="2018-07-13">13 July 2018</time>
+    </header>
+
+    <hr>
+
+    
+
+<p>I&rsquo;ve been building some static websites using GitHub pages. The flow is
+<em>roughly</em> always the same: code is pushed to the <code>master</code> branch, continuous
+integration tool kicks in, and result is published to the <code>gh-pages</code> branch.</p>
+
+<p>That sounds quite simple, but there are a few dozens of ways to do it, and I
+feel like I&rsquo;ve managed over the last few years to build my (probably shared with
+thousands of developers) own decent way of doing it using
+<a href="https://travis-ci.com/">TravisCI</a>. However, I always forget something in the
+process, which is pretty much frustrating.</p>
+
+<p>This is the good time for a change and write down all the steps for myself.</p>
+
+<h2 id="a-bit-of-configuration">A bit of configuration</h2>
+
+<p>To push the production build to the <code>gh-pages</code> branch, TravisCI needs a GitHub
+<a href="https://github.com/settings/tokens">access token</a>. Once generated, this token
+has to be added to the TravisCI configuration.</p>
+
+<p>Using TravisCI dashboard to achieve this is fine and requires no local
+installation. But if you don&rsquo;t mind installing some stuff, this can be done
+using the command line. The
+<a href="https://github.com/travis-ci/travis.rb"><code>travis</code> gem</a> perfectly serves that
+purpose (among a million of other things), and it can both encrypt the token and
+append it to the <code>travis.yml</code> configuration file. Encrypting the access token is
+obvious for security reasons, nobody wants it to be stored in clear text.</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">gem install travis
+travis encrypt -r github_username/repository_name <span class="nv">GITHUB_TOKEN</span><span class="o">=</span>the_github_token --add</code></pre></div>
+<p>Note that if this command is ran in a directory under git control and the <code>-r</code>
+is omitted, <code>travis</code> will ask to tie the encrypted string with the current
+repository.</p>
+
+<h2 id="setting-up-continuous-integration">Setting up continuous integration</h2>
+
+<p>Continuous integration is split in 2 parts: build and deploy.</p>
+
+<p>The build part mostly depends on the publishing tool, but
+<a href="https://docs.travis-ci.com/user/customizing-the-build/#The-Build-Lifecycle">the build lifecycle</a>
+remains the same. For Hugo, I find that installing via the Debian package is the
+most straightforward way to do it, and it requires no additional software.</p>
+
+<p>About the deploy part, if one simply needs to push to the GitHub <code>gh-pages</code>
+branch, I recommend using the
+<a href="https://docs.travis-ci.com/user/deployment/pages/"><em>pages</em> provider</a>. It&rsquo;s dead
+simple to configure and requires no scripting at all. If more tuning before
+pushing is required (one may way to push to a different branch or remote for
+instance) is needed, using the <code>script</code> provider is fine.</p>
+
+<h3 id="travisci-configuration-with-pages-provider">TravisCI configuration with <em>pages</em> provider</h3>
+
+<p>Travis configuration may vary, but the one I use is fairly simple for a Hugo
+website:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># sudo is required to install hugo deb package</span><span class="w">
+</span><span class="w"></span>sudo<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w"></span>env<span class="p">:</span><span class="w">
+</span><span class="w">  </span>global<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GITHUB_REPO<span class="p">:</span><span class="w"> </span>github_username/repository_name<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>secure<span class="p">:</span><span class="w"> </span>encrypted_token<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># fetch archive and install</span><span class="w">
+</span><span class="w"></span>install<span class="p">:</span><span class="w">
+</span><span class="w"></span>-<span class="w"> </span>wget<span class="w"> </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0<span class="m">.25.1</span>/hugo_0<span class="m">.25</span>.1_Linux-64bit.deb<span class="w">
+</span><span class="w"></span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>hugo_0<span class="m">.25</span>.1_Linux-64bit.deb<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># show current hugo version and build website</span><span class="w">
+</span><span class="w"></span>script<span class="p">:</span><span class="w">
+</span><span class="w"></span>-<span class="w"> </span>hugo<span class="w"> </span>version<span class="w">
+</span><span class="w"></span>-<span class="w"> </span>hugo<span class="w">
+</span><span class="w">
+</span><span class="w"></span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c"># don&#39;t remove build directory so it can be pushed later</span><span class="w">
+</span><span class="w">  </span>skip_cleanup<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="c"># this provider makes all the work for us</span><span class="w">
+</span><span class="w">  </span>provider<span class="p">:</span><span class="w"> </span>pages<span class="w">
+</span><span class="w">  </span>local_dir<span class="p">:</span><span class="w"> </span>public<span class="w">
+</span><span class="w">  </span>repo<span class="p">:</span><span class="w"> </span>$GITHUB_REPO<span class="w">
+</span><span class="w">  </span>github_token<span class="p">:</span><span class="w"> </span>$GITHUB_TOKEN<span class="w">
+</span><span class="w">  </span><span class="c"># using fqdn will add the CNAME file</span><span class="w">
+</span><span class="w">  </span>fqdn<span class="p">:</span><span class="w"> </span>www.domain.com<span class="w">
+</span><span class="w">  </span><span class="c"># only deploy if commits are pushed to master</span><span class="w">
+</span><span class="w">  </span>on<span class="p">:</span><span class="w">
+</span><span class="w">    </span>branch<span class="p">:</span><span class="w"> </span>master</code></pre></div>
+<p>For a Jekyll website, I use about the same file with very minor changes:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">sudo<span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="w"></span>language<span class="p">:</span><span class="w"> </span>ruby<span class="w">
+</span><span class="w"></span>rvm<span class="p">:</span><span class="w">
+</span><span class="w"></span>-<span class="w"> </span><span class="m">2.2.4</span><span class="w">
+</span><span class="w"></span>env<span class="p">:</span><span class="w">
+</span><span class="w">  </span>global<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>GITHUB_REPO<span class="p">:</span><span class="w"> </span>github_username/repository_name<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>secure<span class="p">:</span><span class="w"> </span>encrypted_token<span class="w">
+</span><span class="w"></span>script<span class="p">:</span><span class="w"> </span>bundle<span class="w"> </span>exec<span class="w"> </span>jekyll<span class="w"> </span>build<span class="w"> </span><span class="cp">&amp;&amp;</span><span class="w"> </span>bundle<span class="w"> </span>exec<span class="w"> </span>rake<span class="w"> </span>test<span class="w">
+</span><span class="w"></span>deploy<span class="p">:</span><span class="w">
+</span><span class="w">  </span>skip_cleanup<span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span>provider<span class="p">:</span><span class="w"> </span>pages<span class="w">
+</span><span class="w">  </span>local_dir<span class="p">:</span><span class="w"> </span>_site<span class="w">
+</span><span class="w">  </span>repo<span class="p">:</span><span class="w"> </span>$GITHUB_REPO<span class="w">
+</span><span class="w">  </span>github_token<span class="p">:</span><span class="w"> </span>$GITHUB_TOKEN<span class="w">
+</span><span class="w">  </span>fqdn<span class="p">:</span><span class="w"> </span>www.domain.com<span class="w">
+</span><span class="w">  </span>on<span class="p">:</span><span class="w">
+</span><span class="w">    </span>branch<span class="p">:</span><span class="w"> </span>master</code></pre></div>
+<h3 id="legacy-deploy-script-example">Legacy deploy script example</h3>
+
+<p>I used to deploy using the <code>script</code> provider to achieve a less good result. Code
+was indeed pushed to <code>gh-pages</code> branch with a commit message, but the <code>pages</code>
+provider does some extra stuff I don&rsquo;t want to code: add the CNAME file, create
+a file with build date&hellip; Anyway, I archived that script for the record.</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nb">set</span> -e
+
+<span class="c1"># remove version control</span>
+rm -rf .git
+<span class="nb">cd</span> public
+
+<span class="c1"># initialize a repository in the build directory</span>
+git init
+
+<span class="c1"># set a few variables to let GitHub know who is pushing commits</span>
+git config --global user.email <span class="nv">$GIT_EMAIL</span>
+git config --global user.name <span class="nv">$GIT_NAME</span>
+
+<span class="c1"># configure the remote repository</span>
+git remote add origin https://<span class="nv">$GITHUB_TOKEN</span>@github.com/<span class="nv">$GITHUB_REPO</span>.git
+git add .
+
+<span class="c1"># commit and push to remote gh-pages branch</span>
+git commit -m <span class="s2">&#34;Deploy to GitHub Pages (travis build #</span><span class="nv">$TRAVIS_BUILD_NUMBER</span><span class="s2">)&#34;</span>
+git push --force --quiet origin HEAD:gh-pages</code></pre></div>
+<hr />
+
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+

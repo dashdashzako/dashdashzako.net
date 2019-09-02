@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/monthly-report-for-february-2018/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Monthly report for February 2018 – dashdashzako</title>
+  <meta property="og:title" content="Monthly report for February 2018 – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="What happened during February 2018">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Monthly report for February 2018</h1>
+      <time class="post-date" datetime="2018-02-28">28 February 2018</time>
+    </header>
+
+    <hr>
+
+    
+
+<h2 id="project-management">Project Management</h2>
+
+<p>This month I had to set up a couple of tools to help the team with project and
+resources management. Some tools were already made available to me, so I tried
+to make good use of them:</p>
+
+<ul>
+<li><a href="https://taiga.io/">Taiga</a>, a project management platform;</li>
+<li>a random wiki platform I can&rsquo;t remember the name;</li>
+<li><a href="https://about.gitlab.com/">GitLab</a> for the code issues.</li>
+</ul>
+
+<p>After trying to tie every tools altogether, it all ended in a massive failure,
+which made me consider using another combination of tools.</p>
+
+<p>GitLab is fine and wasn&rsquo;t a part of the problem. I&rsquo;ve used it for every project
+I&rsquo;ve been doing for the last two years, and it has integrations with pretty much
+every other service. The real problem was the project management tool.</p>
+
+<p>One constraint about the choice of the tool is that it had to be self hosted. We
+are very concerned about data ownership, and we don&rsquo;t want to blindly host
+everything on any third-party service. So I regretfuly had to remove all the
+software as a service kind of tools from my list.</p>
+
+<p>I&rsquo;ve had the opportunity to work with <a href="https://www.atlassian.com/">Atlassian</a>
+products around 2010, especially
+<a href="https://www.atlassian.com/software/jira">Jira</a>. The impression that I had kept
+was that it was a very expensive and complicated tool to setup, but also that
+<strong>it wasn&rsquo;t getting in the way of my daily work</strong>. This is a very underrated
+criteria when it comes to choosing the right tool for the right task, as these
+days developers unfortunately tend to choose a tool depending on its hype.</p>
+
+<p>The fact is I was wrong concerning the price of the software. Yes you have to
+pay for it, but it isn&rsquo;t <strong>that</strong> expensive, especially if you has ten or less
+collaborators who will use it.</p>
+
+<p>To get a good picture of Jira, I decided to set up a
+<a href="https://www.vagrantup.com/">Vagrant</a> box and use the standalone evaluation
+version of Jira. After a couple of installs, my environment was up and running,
+and I spent the following days trying to figure if this was the good tool or
+not. Let this be clear: It&rsquo;s a complicated beast to tame, and one can easily
+lost themselves in the infinite number of options at every level of the
+software. However, I tried to not dive into useless configuration and went
+directly for the project management stuff.</p>
+
+<p>Creating a project from scratch and populating it is a daunting task, but it&rsquo;s
+made easy since there are a few projects with sample data to play around. I
+toyed with the sample Scrum and Kanban projects, and came to the conclusion that
+Jira was a good tool for the job: It still doesn&rsquo;t get in my way and works like
+a charm out of the box.</p>
+
+<p>There might be other tools doing some things better than others, but I didn&rsquo;t
+have the time to do a complete evaluation of the gazillion project management
+tools.</p>
+
+<h2 id="software-deployment">Software Deployment</h2>
+
+<p>After I had played with Jira on a Vagrant box, I had to deploy it on our
+servers, and this is how I started playing with
+<a href="https://www.ansible.com/">Ansible</a>. I didn&rsquo;t know much about it, but since I&rsquo;m
+pretty familiar with configuration management systems –I used
+<a href="https://saltstack.com/">SaltStack</a> for a couple of years–, I felt at home
+pretty quickly.</p>
+
+<p>Why not use SaltStack eh? Well, the whole IT has recently moved from
+<a href="https://puppet.com/">Puppet</a> to Ansible, so I didn&rsquo;t even bother to try using
+something else hehe.</p>
+
+<p>Ansible is agent-less, making it dead easy to get it running, it has a pretty
+solid documentation, and also integrates perfectly with Vagrant. After getting
+started, I was able to write the complete installation process as a playbook
+–the Ansible way to describe rules– in a <em>decent</em> way within a couple of hours.</p>
+
+<p>Now I could compare these tools, but I don&rsquo;t really manage that many machines
+anymore to have a relevant opinion. I&rsquo;d say Ansible fulfills my current needs
+and is really faster to set up, so I&rsquo;ll stick to it for the time being. If
+you&rsquo;re interested in a thorough comparison between SaltStack and Ansible,
+<a href="https://medium.com/@anthonypjshaw/ansible-v-s-salt-saltstack-v-s-stackstorm-3d8f57149368">Anthony Shaw wrote a very insightful one</a>
+in 2017. His analysis is perfectly neutral and helps understanding these tools.
+If you&rsquo;re wondering which one you should choose, that post can be a good place
+to start.</p>
+
+<h2 id="learning">Learning</h2>
+
+<p>I&rsquo;ve kept doing the <a href="https://www.udemy.com/unitycourse/">Unity Udemy course</a> a
+bit, and I made it to the item 32… of 332. Way to go!</p>
+
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+

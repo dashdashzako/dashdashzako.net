@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/monthly-report-for-march-2018/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Monthly report for March 2018 – dashdashzako</title>
+  <meta property="og:title" content="Monthly report for March 2018 – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="What happened during March 2018">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Monthly report for March 2018</h1>
+      <time class="post-date" datetime="2018-03-31">31 March 2018</time>
+    </header>
+
+    <hr>
+
+    
+
+<h2 id="making-data-explorable">Making data explorable</h2>
+
+<p>The project I&rsquo;m working on had its dataset scattered in various places: CSV
+files, MySQL tables, even JSON files. This dataset is meant to be used by my
+teammates to verify some of their hypotheses, but also to be explored in a more
+free fashion by other researchers.</p>
+
+<p>To verify hypotheses, my teammates extracted some data from one source, copied
+it in some pivot format, performed a query on another tool, reformated and
+reinserted data in the same pivot format… You get the idea, it&rsquo;s not really
+something that sounds fun to deal with. Not to mention each of these steps was
+done manually, making the whole process error-prone.</p>
+
+<p>What seemed obvious to me was to have the whole dataset pieces as easy to reach
+as possible for the end user, and easy to maintain for me. The consequence of
+this assumption was: I wanted to find a storage system that allowed me to plug
+some kind of visualization system on top of it. I could have created a piece of
+software that could use the existing storage systems, but I didn&rsquo;t have much
+time to create it, and virtually no time at all for new features.</p>
+
+<p>After looking at the landscape of visualization tools,
+<a href="https://grafana.com/">Grafana</a> and
+<a href="https://www.elastic.co/fr/products/kibana">Kibana</a> were the last two remaining
+contenders. They both offer good support from the community, they allow custom
+visualization building, exist in a free version, and most importantly can be
+hosted on our own servers. This is an important matter to us because we own
+sensitive data and legally can&rsquo;t rely on an external storage service. Well, we
+could, but the paperwork would take ages to be filled, and it would be more
+expensive anyway.</p>
+
+<p>Both of these tools can read data from
+<a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>. Since I could
+request whatever machine resources I needed, chosing storage was actually almost
+a no-brainer and I went the Elasticsearch way.</p>
+
+<p>Using Grafana would have been a decent choice, but I got the impression that
+Kibana was more user-friendly. Kibana integration with Elasticsearch is
+straightforward, and having both services up and running is only a matter of
+minutes using
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html">the official RPM repository</a>.
+I toyed with the tools using the
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html">Docker images</a>,
+which I find even more convenient than setting up a
+<a href="https://www.vagrantup.com/">Vagrant box</a>.</p>
+
+<p>The only downside of this setup is that our data format didn&rsquo;t fit quite well.
+The dataset is made of <code>Users</code> objects, and <code>UserEvents</code> belonging to them. I
+could have used
+<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/nested-objects.html">Elasticsearch nested objects</a>,
+but Kibana
+<a href="https://github.com/elastic/kibana/issues/1084">doesn&rsquo;t support nested type aggregations</a>
+and our team needed to be able to study <code>UserEvents</code> without querying the
+related <code>Users</code>.<br />
+In a flat world, this could be done using two separated indices and have each
+<code>UserEvent</code> wear the whole <code>User</code> properties, but this doesn&rsquo;t seem quite right
+given our use case since this would have required more manipulation from my
+teammates. In addition to that, <code>Users</code> and <code>UserEvents</code> were completely
+separated in the application logic, and I didn&rsquo;t have the time to migrate data
+and update the application code.</p>
+
+<p>Hopefully, I managed to make it right using only a single index for the whole
+documents, and use the
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/master/parent-join.html"><code>join</code> datatype</a>
+to bridge my objects. Using this parent/children relationship induces
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/general-recommendations.html#sparsity">sparsity</a>
+when documents fields are different –which was true for us–, but storage
+requirements were not my main concern and this was an acceptable trade-off.</p>
+
+<h3 id="tools-i-used">Tools I used</h3>
+
+<ul>
+<li><a href="https://github.com/Keyang/node-csvtojson">csvtojson</a>,</li>
+<li><a href="https://www.gnu.org/software/sed/">sed</a> and
+<a href="https://www.gnu.org/software/gawk/">awk</a> scripts,</li>
+<li><a href="https://www.ansible.com/">Ansible</a> to deploy configuration files to the
+production server.</li>
+</ul>
+
+<h2 id="the-post-javascript-apocalypse-douglas-crockford">The Post Javascript Apocalypse - Douglas Crockford</h2>
+
+<p>Another <em>good parts</em> about programming languages.</p>
+
+<div class="video-container">
+  <iframe width="1280" height="720" src="https://www.youtube.com/embed/NPB34lDZj3E" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<h2 id="performant-web-rendering">Performant web rendering</h2>
+
+<p>I&rsquo;ve read quite a lot about the page rendering process of the browsers, and
+found some very interesting articles to begin with:</p>
+
+<ul>
+<li><a href="https://www.html5rocks.com/en/tutorials/speed/layers/">https://www.html5rocks.com/en/tutorials/speed/layers/</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/performance/rendering/">https://developers.google.com/web/fundamentals/performance/rendering/</a></li>
+<li><a href="https://engineering.riotgames.com/news/animation-league-legends-client">https://engineering.riotgames.com/news/animation-league-legends-client</a></li>
+<li><a href="https://hacks.mozilla.org/2017/10/the-whole-web-at-maximum-fps-how-webrender-gets-rid-of-jank/">The whole web at maximum FPS: How WebRender gets rid of jank – Lin Clark</a></li>
+</ul>
+
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/working-with-hugo-v43-and-travisci/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Working with Hugo v43 and TravisCI – dashdashzako</title>
+  <meta property="og:title" content="Working with Hugo v43 and TravisCI – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="Hugo v43&#43; has a new assets pipeline that requires some updates to the travis configuration. I&#39;ll describe how I managed to have a proper setup.">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Working with Hugo v43 and TravisCI</h1>
+      <time class="post-date" datetime="2018-09-06">06 September 2018</time>
+    </header>
+
+    <hr>
+
+    
+
+<p>Since Hugo v43, you can use a brand new assets pipeline called
+<a href="http://gohugo.io/news/0.43-relnotes/">Hugo Pipes</a> that allows using SASS/SCSS
+files without relying on another build tool such as <a href="https://gulpjs.com/">Gulp</a>
+or <a href="https://gruntjs.com/">Grunt</a>.</p>
+
+<p>However, updating Hugo and your code to use Pipes will not work out of the box.</p>
+
+<p>This post is a follow up of my <a href="/2018/deploying-a-website-built-with-hugo-to-github-pages/">&ldquo;Publishing a website built with Hugo to GitHub
+Pages&rdquo;</a> post.</p>
+
+<h2 id="pipes-require-the-extended-version-of-hugo">Pipes require the extended version of Hugo</h2>
+
+<blockquote>
+<p>Hugo is now released with two binary version: One with and one without
+SCSS/SASS support. At the time of writing, this is only available in the
+binaries on the GitHub release page. Brew, Snap builds etc. will come. But
+note that you only need the extended version if you want to edit SCSS. For
+your CI server, or if you don’t use SCSS, you will most likely want the
+non-extended version.</p>
+</blockquote>
+
+<p>This means this change also need to be applied to the <code>.travis.yml</code>
+configuration file.</p>
+
+<p>If you use a Mac, Homebrew will install the extended version of Hugo.</p>
+
+<h2 id="pipes-expect-node-and-some-npm-libraries-to-be-installed">Pipes expect node and some npm libraries to be installed</h2>
+
+<p>Some of the assets pipeline logic relies on a couple of node packages, and even
+if you don&rsquo;t use them, Hugo won&rsquo;t build unless they are installed.</p>
+
+<p>First I initialized the <code>package.json</code> file with <code>npm init</code>.</p>
+
+<p>Them, as I tend to never install an npm package globally, I just installed the
+dependencies locally for this project running <code>npm i postcss-cli autoprefixer</code>.</p>
+
+<p>This step generates a couple of files, don&rsquo;t forget to add them to the
+<code>.gitignore</code>.</p>
+
+<h2 id="processing-steps-require-a-bit-of-configuration">Processing steps require a bit of configuration</h2>
+
+<p>To use <a href="https://postcss.org/">PostCSS</a> and
+<a href="https://github.com/postcss/autoprefixer">autoprefixer</a>, some configuration
+files must be created. The ones at the root of this project have the bare
+minimum configuration and should be enough for most of my needs later.</p>
+
+<h2 id="caveats">Caveats</h2>
+
+<h3 id="files-location">Files location</h3>
+
+<p>I used to have my css file in the <code>static</code> directory of my theme, but to be used
+as a resource, the file has to be in the assets folder of the theme.</p>
+
+<h3 id="missing-libraries">Missing libraries</h3>
+
+<p>While everything worked perfectly fine locally, I had trouble running the
+extended version of Hugo on Travis environment. The script step shown
+<code>GLIBCXX_3.4.20' not found</code> errors, and checking what GLIBCXX were in the shared
+objects, I got the following:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 <span class="p">|</span> grep GLIBCXX
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+GLIBCXX_3.4.7
+GLIBCXX_3.4.8
+GLIBCXX_3.4.9
+GLIBCXX_3.4.10
+GLIBCXX_3.4.11
+GLIBCXX_3.4.12
+GLIBCXX_3.4.13
+GLIBCXX_3.4.14
+GLIBCXX_3.4.15
+GLIBCXX_3.4.16
+GLIBCXX_3.4.17
+GLIBCXX_3.4.18
+GLIBCXX_3.4.19
+GLIBCXX_DEBUG_MESSAGE_LENGTH</code></pre></div>
+<p>Installing <code>libstdc++-4.9-dev</code> did better:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 <span class="p">|</span> grep GLIBCXX
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+GLIBCXX_3.4.5
+GLIBCXX_3.4.6
+GLIBCXX_3.4.7
+GLIBCXX_3.4.8
+GLIBCXX_3.4.9
+GLIBCXX_3.4.10
+GLIBCXX_3.4.11
+GLIBCXX_3.4.12
+GLIBCXX_3.4.13
+GLIBCXX_3.4.14
+GLIBCXX_3.4.15
+GLIBCXX_3.4.16
+GLIBCXX_3.4.17
+GLIBCXX_3.4.18
+GLIBCXX_3.4.19
+GLIBCXX_3.4.20
+GLIBCXX_3.4.21
+GLIBCXX_3.4.22
+GLIBCXX_3.4.23
+GLIBCXX_3.4.24
+GLIBCXX_3.4.25
+GLIBCXX_DEBUG_MESSAGE_LENGTH</code></pre></div>
+<p>But I was not quite done yet, and the build returned a horrid error:</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">relocation error: hugo: symbol _ZTVNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE, version GLIBCXX_3.4.21 not defined in file libstdc++.so.6 with link <span class="nb">time</span> reference</code></pre></div>
+<p>At this point I was kind of lost and posted a message to seek support on the
+Hugo discussion forum
+(<a href="https://discourse.gohugo.io/t/hugo-v44-extended-and-relocation-errors/13029">see the thread</a>).</p>
+
+<p>Eventually, someone proposed a good workaround to apply in travis configuration:</p>
+<div class="highlight"><pre class="chroma"><code class="language-yml" data-lang="yml">before_install<span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c"># This workaround is required to avoid libstdc++ errors while</span><span class="w">
+</span><span class="w">  </span><span class="c"># running &#34;extended&#34; hugo with SASS support.</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>-q<span class="w"> </span>-O<span class="w"> </span>libstdc++<span class="m">6</span><span class="w">
+</span><span class="w">    </span>http<span class="p">:</span>//security.ubuntu.com/ubuntu/pool/main/g/gcc<span class="m">-5</span>/libstdc++6_5<span class="m">.4.0</span>-6ubuntu1~<span class="m">16.04</span>.10_amd64.deb<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>--force-all<span class="w"> </span>-i<span class="w"> </span>libstdc++<span class="m">6</span><span class="w">
+</span><span class="w"></span>install<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>wget<span class="w"> </span>-q<span class="w"> </span>-O<span class="w"> </span>hugo.deb<span class="w">
+</span><span class="w">    </span>https<span class="p">:</span>//github.com/gohugoio/hugo/releases/download/v0<span class="m">.47.1</span>/hugo_extended_0<span class="m">.47</span>.1_Linux-64bit.deb<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>hugo.deb</code></pre></div>
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+

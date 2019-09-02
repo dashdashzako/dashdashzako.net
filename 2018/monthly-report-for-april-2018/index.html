@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/monthly-report-for-april-2018/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Monthly report for April 2018 – dashdashzako</title>
+  <meta property="og:title" content="Monthly report for April 2018 – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="What happened during April 2018">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Monthly report for April 2018</h1>
+      <time class="post-date" datetime="2018-04-30">30 April 2018</time>
+    </header>
+
+    <hr>
+
+    
+
+<h2 id="kibana">Kibana</h2>
+
+<p>I spent some time working with
+<a href="https://www.elastic.co/fr/products/kibana">Kibana</a> and trying to understand
+some data inconsistency when using
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/6.2/query-dsl-has-parent-query.html">the Elasticsearch <code>has_parent</code> query</a>.
+For a given query using it, it was obvious not every documents were returned.
+Using the same datsaset on a different Elasticsearch instance, I still had
+inconsistency though the results were different.</p>
+
+<p>After properly reading the dozen pages of documentation about the join queries,
+I found something interesting in
+<a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/parent-child.html">the definitive guide</a>:</p>
+
+<blockquote>
+<p>Elasticsearch maintains a map of which parents are associated with which
+children. It is thanks to this map that query-time joins are fast, but it does
+place a limitation on the parent-child relationship: the parent document and
+all of its children must live on the same shard.</p>
+</blockquote>
+
+<p>This <em>same shard</em> limitation is what I was looking for: when I inserted the
+dataset, I had let Elasticsearch handle sharding. Solving my problem was rather
+simple: I created a new index and reindexed my data using
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-reindex.html#docs-reindex">the reindex API</a>
+with a specific <code>_routing</code> field parameter. a inserted the dataset again using a
+custom
+<a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-routing-field.html#mapping-routing-field">routing field</a>.</p>
+
+<p>And inconsistency was gone.</p>
+
+<h2 id="web-landscape">Web landscape</h2>
+
+<p>I reviewed and tested a couple of handfuls of the mainstream tools in the
+JavaScript ecosystem. I was lagging a bit from the <del>hype</del> state of the
+art and took some time to catch up.</p>
+
+<p>That reminds me about the post
+<a href="https://medium.com/@withinsight1/the-front-end-spectrum-c0f30998c9f0">The Front-End Spectrum by Jeff Pelletier</a>,
+and how much it remains relevant even after 3 years (I could bet the same
+article could have been written in 2011). Anyway, tools change, goal remains the
+same: deliver reliable and high quality software.</p>
+
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="generator" content="Hugo 0.57.2" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="dashdashzako">
+  <meta property="og:url" content="https://dashdashzako.net/2018/handling-video-buffered-time-ranges/">
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/img/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/img/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/img/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/img/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/apple-touch-icon-152x152.png">
+  <link rel="icon" type="image/png" href="/img/favicon-196x196.png" sizes="196x196">
+  <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/img/favicon-128.png" sizes="128x128">
+  <meta name="application-name" content="dashdashzako.net" />
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="mstile-144x144.png">
+  <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+  <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+  <meta name="msapplication-wide310x150logo" content="mstile-310x150.png">
+  <meta name="msapplication-square310x310logo" content="mstile-310x310.png">
+
+  <title>Handling Video Buffered Time Ranges – dashdashzako</title>
+  <meta property="og:title" content="Handling Video Buffered Time Ranges – dashdashzako">
+  <meta property="og:type" content="article">
+  <meta name="description" content="Giving users an indication about what part of a media might be useful. But can developers achieve this consistently, or do browsers get in the way?">
+
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet" href="/css/ddz.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+
+<div class="site-nav">
+  <a href="https://dashdashzako.net/"><span class="icon a11y-hidden-left" aria-label="Navigate back to ">↩</span>Index</a>
+</div>
+
+<main class="site-content">
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">Handling Video Buffered Time Ranges</h1>
+      <time class="post-date" datetime="2018-11-21">21 November 2018</time>
+    </header>
+
+    <hr>
+
+    <p>When building a web media player, one may want to let the user know what part of
+the media has been loaded.</p>
+
+<p>Usually, it is displayed on top of the seekbar in a slightly more contrasted
+tone:</p>
+
+<p><img src="youtube-controls-bar.png" alt="YouTube controls bar" /><br />
+<img src="vimeo-controls-bar.png" alt="Vimeo controls bar" /></p>
+
+<p>Actually, I honestly don&rsquo;t know what this information is good for, but not
+having it feels like kind of weird. Of course I can still use a player without
+this feature, but I believe I got used to having it on popular players and
+expect to have it on every other player.</p>
+
+<p>One of my colleague said that this was useful to him because he knew up to which
+point in the video he could seek without having to wait for data to download.</p>
+
+<p>Right or wrong, I wanted to try to implement it.</p>
+
+<p>Basically, binding an event listener on the HTMLMediaElement (the superclass of
+HTMLVideoElement and HTMLAudioElement) <code>progress</code> event, reading the <code>buffered</code>
+property of the media, and then transforming it into a readable array of objects
+with a <code>start</code> and an <code>end</code> property is how I did.</p>
+
+<p>Sounds simple, right?</p>
+
+<p>Well, kind of, but this is the result I ended up with on Chrome:</p>
+
+<p><img src="chrome-buffered-ranges.png" alt="Exemple of missing buffered ranges on Chrome" /></p>
+
+<p>I thought that these small holes in the buffer were a consequence of a poorly
+coded way to render the information, so I looked for the plain text
+representation of the <code>buffered</code> property and after seeking in the media.</p>
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="k">const</span> <span class="nx">media</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&#34;video&#34;</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">media</span><span class="p">.</span><span class="nx">buffered</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span>
+    <span class="sb">`start: </span><span class="si">${</span><span class="nx">media</span><span class="p">.</span><span class="nx">buffered</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="si">}</span><span class="sb">, end: </span><span class="si">${</span><span class="nx">media</span><span class="p">.</span><span class="nx">buffered</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Result:</p>
+<div class="highlight"><pre class="chroma"><code class="language-text" data-lang="text">start: 0, end: 20.734
+start: 28.408107, end: 32.275737
+start: 32.553, end: 51.936
+start: 103.483107, end: 106.277733
+start: 107.302, end: 124.305
+start: 163.543107, end: 166.278095
+start: 167.952, end: 185.68
+start: 217.597107, end: 219.131973
+start: 222.174, end: 223.86</code></pre></div>
+<p>What I could not figure at this point is, given a seeked time, why is the media
+not being buffered in a continuous fashion?<br />
+Why are there interruptions between the small initial ranges (i.e.
+<code>start: 103.483107, end: 106.277733</code>) and the following ones (i.e.
+<code>start: 107.302, end: 124.305</code>)?</p>
+
+<p>I then tried on both Firefox and Safari, I got different results. None of the
+browsers results were similar to the others, so I thought may be assuming
+browsers were doing it right <strong>and</strong> consistently was a bad assumption in the
+first place.</p>
+
+<p>What looked like a satisfying answer for this behaviour came from the
+<a href="https://www.w3.org/TR/html50/embedded-content-0.html#best-practices-for-implementors-of-media-elements">W3C embedded content about HTMLMediaElement</a>:</p>
+
+<blockquote>
+<p>For example, when implementing the buffered attribute, how precise an
+implementation reports the ranges that have been buffered depends on how
+carefully the user agent inspects the data. Since the API reports ranges as
+times, but the data is obtained in byte streams, a user agent receiving a
+variable-bit-rate stream might only be able to determine precise times by
+actually decoding all of the data. User agents aren&rsquo;t required to do this,
+however; they can instead return estimates (e.g. based on the average bit rate
+seen so far) which get revised as more information becomes available.</p>
+
+<p>As a general rule, user agents are urged to be conservative rather than
+optimistic. For example, it would be bad to report that everything had been
+buffered when it had not.</p>
+</blockquote>
+
+<p>Basically, the <code>buffered</code> attribute implementation varies from a browser to
+another, and beside reading every specification or testing all the browsers, one
+cannot be sure the result will be consistent.</p>
+
+<p>How handy.</p>
+
+<p>Since I am not sure what this buffered representation brings to the user, I may
+simply drop it to ensure experience is similar across browsers.</p>
+
+
+  </article>
+</main>
+
+
+
+
+</div>
+
+<!-- Build date: Mon, 02 Sep 2019 09:53:56 UTC -->
+
+
+</body>
+
+</html>
+
