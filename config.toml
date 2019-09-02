@@ -2,7 +2,7 @@ baseURL = "https://dashdashzako.net/"
 languageCode = "en"
 title = "dashdashzako"
 theme = "ddz"
-disableKinds = ["section", "taxonomy", "taxonomyTerm", "RSS"]
+disableKinds = ["section", "taxonomy", "taxonomyTerm"]
 
 pygmentsUseClasses = true
 pygmentsCodeFences = true
