@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
+
 <head>
-  {{ .Hugo.Generator }}
+  {{ hugo.Generator }}
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,7 +23,7 @@
   <link rel="icon" type="image/png" href="{{ "img/favicon-32x32.png" | relURL }}" sizes="32x32">
   <link rel="icon" type="image/png" href="{{ "img/favicon-16x16.png" | relURL }}" sizes="16x16">
   <link rel="icon" type="image/png" href="{{ "img/favicon-128.png" | relURL }}" sizes="128x128">
-  <meta name="application-name" content="dashdashzako.net"/>
+  <meta name="application-name" content="dashdashzako.net" />
   <meta name="msapplication-TileColor" content="#FFFFFF">
   <meta name="msapplication-TileImage" content="mstile-144x144.png">
   <meta name="msapplication-square70x70logo" content="mstile-70x70.png">
@@ -42,10 +43,13 @@
   <meta name="description" content="{{ .Description }}">
   {{- end }}
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Libre+Franklin:400,700|Arvo:400,700">
   <link rel="stylesheet" href="{{ "css/ddz.css" | relURL }}">
-  <link href="{{ "index.xml" | relURL }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }} - RSS feed">
+  {{ with .OutputFormats.Get "rss" -}}
+  <link href="{{ .Permalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }}">
+  {{- end }}
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
