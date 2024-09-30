@@ -3,12 +3,12 @@
 
 name = "ddz"
 license = "MIT"
-licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE.md"
+licenselink = "https://github.com/dashdashzako/dashdashzako.github.io/blob/main/themes/ddz/LICENSE.md"
 description = "ddz theme"
 homepage = "https://github.com/"
 tags = ["accessibility", "a11y", "readability", "contrast"]
 features = []
-min_version = "0.31.1"
+min_version = "0.135.0"
 
 [author]
   name = "dashdashzako"
